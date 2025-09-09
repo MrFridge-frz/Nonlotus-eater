@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# 解决前端路由刷新 404
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# 可选：设置环境变量
+[build.environment]
+  NODE_VERSION = "20"
+
+# 可选：设置标题
+[template.environment]
+  TITLE = "我的 Astro 博客"v
