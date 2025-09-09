@@ -14,4 +14,4 @@
 
 # 可选：设置标题
 [template.environment]
-  TITLE = "我的 Astro 博客"v
+  TITLE = "我的 Astro 博客"
