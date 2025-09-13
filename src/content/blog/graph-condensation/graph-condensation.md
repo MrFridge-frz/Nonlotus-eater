@@ -9,17 +9,6 @@ comment: true
 
 # Graph Condensation: A Survey
 
----
-title: "文章标题"
-description: "一句话描述"
-publishDate: "2025-09-13"
-tags: ["标签1", "标签2"]
-draft: false
-comment: true
----
-
-# 文章主标题
-
 这里是正文的第一段内容，可以介绍文章的背景或主题。
 
 ## 小节标题一
