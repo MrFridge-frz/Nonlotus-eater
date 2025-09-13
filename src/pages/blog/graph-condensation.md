@@ -6,3 +6,5 @@ tags: ["Astro", "Blog"]
 draft: false
 comment: true
 ---
+
+# Graph Condensation: A Survey
