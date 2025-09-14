@@ -7,7 +7,7 @@ draft: false
 comment: true
 ---
 
-![An overview of Graph Condensation](C:\Code\Blog\src\content\blog\graph-condensation\Overview.png "An overview of Graph Condensation")
+![An overview of Graph Condensation](/images/graph_condensation/Overview.png)
 
 > GC focuses on synthesizing a compact yet highly representative graph, enabling GNNs trained on it to achieve performance comparable to those trained on the original large graph.
 
