@@ -7,6 +7,8 @@ draft: false
 comment: true
 ---
 
+## An overview of Graph condensation
+
 ![An overview of Graph Condensation](/images/graph_condensation/Overview.png)
 
 > GC focuses on synthesizing a compact yet highly representative graph, enabling GNNs trained on it to achieve performance comparable to those trained on the original large graph.
@@ -33,7 +35,6 @@ comment: true
     $$
     其中$\mathcal{L}_{cond}$是图压缩的优化函数。
 
-
 Graph Condensation主要分为两部分：Optimization strategies 和 Condensed graph generation。本文的后续部分将从这两部分进行介绍。
 
 ## Optimization Strategies
@@ -57,6 +58,8 @@ console.log('Hello Markdown!');
 ```
 
 ## Condensed Graph Generation
+
+1
 
 ## 总结
 
