@@ -7,11 +7,15 @@ draft: false
 comment: true
 ---
 
-# Graph Condensation: A Survey
+![An overview of Graph Condensation](C:\Code\Blog\src\content\blog\graph-condensation\Overview.png "An overview of Graph Condensation")
 
-这里是正文的第一段内容，可以介绍文章的背景或主题。
+> GC focuses on synthesizing a compact yet highly representative graph, enabling GNNs trained on it to achieve performance comparable to those trained on the original large graph.
 
-## 小节标题一
+图压缩旨在应对large scale的图训练任务，通过压缩图的节点个数、labels和节点特征达到减少训练量的作用。
+
+Graph Condensation主要分为两部分：Optimization strategies 和 Condensed graph generation。本文的后续部分将从这两部分进行介绍。
+
+## Optimization Strategies
 
 详细说明某个知识点或内容。  
 可以换行，也可以**加粗**、*斜体*，或者插入[链接](https://example.com)。
@@ -30,6 +34,8 @@ comment: true
 // 代码块示例
 console.log('Hello Markdown!');
 ```
+
+## Condensed Graph Generation
 
 ## 总结
 
