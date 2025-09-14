@@ -33,10 +33,13 @@ const typographyConfig = {
     },
     // Blockquote
     blockquote: {
+      color: '#e0e0ff', // 👈 核心修复！
+      'border-left-color': '#8b5cf6', // 👈 增强视觉
+      'background-color': 'rgba(50, 50, 70, 0.2)', // 👈 可选，提升可读性
       position: 'relative',
       overflow: 'hidden',
       'border-width': '1px',
-      'border-left': 'inherit',
+      'border-left': '4px solid', // 👈 改为显式边框宽度+颜色
       'border-radius': 'var(--radius)',
       'padding-inline': '1.6rem',
       'box-shadow': '0 5px 0 ' + bgMuted,
