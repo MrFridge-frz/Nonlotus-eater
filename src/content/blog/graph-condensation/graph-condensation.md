@@ -63,12 +63,14 @@ $$
 | **梯度匹配 (Gradient Matching)** | **公式:** $L_{\text{cond}} = \mathbb{E}_{\theta_0 \sim \Theta} \left[ \sum_{t=1}^T D(\nabla_\theta L_T(\theta_t), \nabla_\theta L_S(\theta_t)) \right]$<br>**解释:**<br>- $\mathbb{E}_{\theta_0 \sim \Theta}$: 对中继模型 $f_\theta$ 的初始参数 $\theta_0$ 从分布 $\Theta$ 中采样并求期望，以提高鲁棒性。<br>- $D(\cdot, \cdot)$: 距离度量函数（如余弦相似度或L2距离），用于衡量两个梯度向量的差异。<br>- $\nabla_\theta L_T(\theta_t)$: 在第 $t$ 步、模型参数为 $\theta_t$ 时，在**原始图 $T$** 上计算的任务损失 $L_T$ 对参数 $\theta$ 的梯度。<br>- $\nabla_\theta L_S(\theta_t)$: 在第 $t$ 步、模型参数为 $\theta_t$ 时，在**浓缩图 $S$** 上计算的任务损失 $L_S$ 对参数 $\theta$ 的梯度。<br>- $\theta_{t+1} = \text{opt}(L_S(\theta_t))$: 约束条件，表示模型参数 $\theta$ 仅在浓缩图 $S$ 上通过优化器 $\text{opt}(\cdot)$ 进行更新。 | **优:** 主流方法，效果好。<br>**缺:** 计算开销大，是双层优化。             |
 | **轨迹匹配 (Trajectory Matching)** | **公式:** $L_{\text{cond}} = \mathbb{E}_{\theta'_t \sim \Theta'} \left[ D(\theta_{t+T}^T, \theta_{t+L}^S) \right]$<br>**解释:**<br>- $\mathbb{E}_{\theta'_t \sim \Theta'}$: 对从原始图训练轨迹中采样的中间参数（检查点）$\theta'_t$ 从集合 $\Theta'$ 中采样并求期望。<br>- $\theta_{t+T}^T$: 从起点 $\theta'_t$ 开始，在**原始图 $T$** 上再训练 $T$ 步后得到的模型参数。<br>- $\theta_{t+L}^S$: 从**同一个起点 $\theta'_t$** 开始，在**浓缩图 $S$** 上再训练 $L$ 步后得到的模型参数。$T$ 和 $L$ 是控制更新步数的超参数。<br>-$\theta_{t+1}^T = \text{opt}(L_T(\theta_t^T))$ <br>-$\theta_{t+1}^S = \text{opt}(L_S(\theta_t^S))$ | **优:** 匹配更全局信息，性能通常更好。<br>**缺:** 计算开销极大，是三层优化。 |
 | **核岭回归 (Kernel Ridge Regression)** | **公式:** $L_{\text{cond}} = \frac{1}{2} \| Y - K_{TS} (K_{SS} + \lambda I)^{-1} Y' \|^2$<br>**解释:**<br>- $K_{TS}$: 核矩阵，其元素 $K_{TS}[i,j]$ 表示原始图中第 $i$ 个样本与浓缩图中第 $j$ 个样本在核空间中的相似度。<br>- $K_{SS}$: 核矩阵，其元素 $K_{SS}[i,j]$ 表示浓缩图中第 $i$ 个样本与第 $j$ 个样本在核空间中的相似度。<br>- $\lambda$: 正则化系数| **优:** 计算高效，有闭式解。<br>**缺:** 核矩阵内存消耗大。     |
-| **分布匹配 (Distribution Matching)** | **公式:** $L_{\text{cond}} = \mathbb{E}_{\theta_0 \sim \Theta} \left[ D(f_\theta(T), f_\theta(S)) \right]$<br>**解释:**<br>- $f_\theta(\cdot)$: 中继模型 $f_\theta$ 对图进行编码后得到的特征表示集合。 | **优:** 计算最高效，无梯度计算。<br>**缺:** 通常需类别标签，任务适应性受限。 |
+| **分布匹配 (Distribution Matching)** | **公式:** $L_{\text{cond}} = \mathbb{E}_{\theta_0 \sim \Theta} \left[ D(f_\theta(T), f_\theta(S)) \right]$<br>**解释:**<br>- $f_\theta(\cdot)$: 中继模型 $f_\theta$ 对图进行编码后得到的特征表示集合。 | **优:** 计算最高效，无梯度计算。<br>**缺:** 通常需类别标签。 |
 
 ## Condensed Graph Generation
 
 1
 
-## 总结
+## 阅读感受
 
-最后一段总结或个人感想。
+1. 图压缩通常用于分类问题，因为不可避免的要在损失函数和优化策略中使用到分类标签和压缩的分类标签$Y 和 Y'$,所以若要使用于其他任务，需要开发任务无关(Task-Agnostic)/自监督(Self-supervised)的优化策略
+   1. 可以参考的论文：
+      1. CTGC:使用self-supervised learning，输入数据完全避免标签。[Contrastive Graph Condensation: Advancing Data Versatility through Self-Supervised Learning](https://dl.acm.org/doi/abs/10.1145/3711896.3736892)
