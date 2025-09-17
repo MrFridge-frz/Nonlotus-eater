@@ -67,7 +67,44 @@ $$
 
 ## Condensed Graph Generation
 
-1
+压缩图$\mathcal{S}=(\mathcal{X'}, \mathcal{A'})$由特征生成(Feature Generation)和图结构生成(Structure Generation)两个核心部分组成：
+
+### Feature Generation
+
+特征矩阵$X'$很大程度上由反向传播和梯度下降来迭代更新，导致了特征矩阵的最终效果对初始化方法非常敏感，不同的初始化会导致收敛速度和最终性能的差异。所以不同的初始化策略相当重要，如随机采样、核心集选择(coreset method)和聚类的方法；此外还有非梯度的初始化方法，求出初始化的闭式解情况。
+
+### Structure Generation
+
+压缩图的邻接矩阵$A'$ 定义了压缩节点之间的关系，旨在保留原始图的拓扑信息。其构建方式（如同质性、谱特性、稀疏性）会显著影响GNN的性能。
+
+目前的研究包括生成式模型(Generative Model)、Parameterization、Pre-defined Structure和Condensed Graph Sparsification等四种方法。
+
+## Evaluation Metric
+
+评估指标可以从Effectiveness/Generalization/Efficiency/Fairness/Robustness五个角度出发，评估压缩图的性能：
+
+### Effectiveness
+评估指标为**准确率（Accuracy）**。通过比较在不同压缩率（condensation ratio）下，使用压缩图训练的GNN模型与使用原始图训练的GNN模型在特定下游任务（如节点分类）上的准确率来衡量。准确率越接近原始图的性能，说明该图压缩方法越有效。
+
+### Generalization
+评估指标为**跨架构和跨任务的平均性能**。具体而言，是在压缩图上训练多种不同的GNN架构（如GCN, SAGE, GAT等）并执行多种下游任务（如节点分类、链接预测、异常检测等），然后计算其平均准确率。公式表示为：对于特定任务 *t*，其泛化性能 *pt* 为 *n* 个GNN架构准确率的平均值，即 
+$$pt = (1/n) ∑ acc_i$$
+该值越高，表明压缩图的泛化能力越强。
+
+### Efficiency
+评估指标为**压缩过程总耗时（Total Time）**。直接测量从开始到生成最终压缩图所需的全部时间。耗时越短，表明该方法的效率越高，越具有实际应用的可行性。
+
+### Fairness
+评估指标为**模型预测偏差（Bias）**，主要使用两个公平性度量标准：
+*   **人口统计均等性差异 (ΔDP)**: 衡量模型预测结果在不同敏感群体间的差异。
+  $$ΔDP = |P(ŷ=1|s=0) - P(ŷ=1|s=1)|$$
+   
+*   **机会均等性差异 (ΔEO)**: 衡量在真实正例中，不同敏感群体获得正向预测的几率差异。
+  $$ΔEO = |P(ŷ=1|y=1, s=0) - P(ŷ=1|y=1, s=1)|$$
+GC方法若能有效降低GNN模型在压缩图上的ΔDP和ΔEO，使其低于或等于在原始图上的偏差，则被认为是更公平的。
+
+### Robustness
+评估指标为**在噪声数据上的准确率（Accuracy under Noise）**。通过在原始图中引入不同水平的噪声（如随机添加或删除边），然后基于噪声图生成压缩图，并评估在此压缩图上训练的GNN模型的准确率。准确率越高，表明该GC方法在压缩过程中能更好地保留核心信息，对原始图中的噪声更具鲁棒性。
 
 ## 阅读感受
 
